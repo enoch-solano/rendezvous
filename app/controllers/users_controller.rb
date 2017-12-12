@@ -25,9 +25,9 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
       if @user.save
+	      log_in @user
         flash[:success] = "Welcome to Rendezvous!"
         format.html { redirect_to @user, notice: 'User was successfully created.' }
       else

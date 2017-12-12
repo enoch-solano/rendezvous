@@ -1,6 +1,6 @@
 <h1> Log In </h1>
 
-<%= form_tag url: '/login' do %>
+<%= form_for(:session, url: login_path) do %>
   <div class="form-group">
     <%= label_tag :email %>
     <%= text_field_tag :email, nil, class: 'form-control' %>
@@ -13,3 +13,5 @@
 
   <%= button_tag 'Log in', class: 'btn btn-primary' %>
 <% end %>
+
+	<p>New user? <%= link_to "Sign up now!", signup_path %></p>
