@@ -1,35 +1,39 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Events</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Time</th>
-      <th>Location</th>
-      <th>Description</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @events.each do |event| %>
+<% if @events.empty? %>
+  <p class="table-elt">There are no events at the moment</p>
+<% else %>
+  <table>
+    <thead>
       <tr>
-        <td><%= event.title %></td>
-        <td><%= event.time %></td>
-        <td><%= event.location %></td>
-        <td><%= event.description %></td>
-        <td><%= event.user %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th class="table-dark bg-primary">Title</th>
+        <th class="table-dark bg-primary">Date</th>
+        <th class="table-dark bg-primary">Location</th>
+        <th class="table-dark bg-primary">Description</th>
+        <th class="table-dark bg-primary">Host</th>
+        <th class="table-dark bg-primary" colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td class="table-elt"><%= event.title %></td>
+          <td class="table-elt"><%= event.time %></td>
+          <td class="table-elt"><%= event.location %></td>
+          <td class="table-elt"><%= event.description %></td>
+          <td class="table-elt"><%= event.user.name %></td>
+          <td class="table-elt"><%= link_to 'Show', event %></td>
+          <% if logged_in? %>
+            <% if event.user_id == current_user.id %>
+              <td class="table-elt"><%= link_to 'Edit', edit_event_path(event) %></td>
+              <td class="table-elt"><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 <br>
-
-<%= link_to 'New Event', new_event_path %>

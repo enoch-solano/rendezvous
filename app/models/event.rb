@@ -1,7 +1,9 @@
 class Event < ApplicationRecord
   belongs_to :user
+  # has_many :users, through: participant
 
-  validates :date, presence: true
   validates :title, presence: true
   validates :description, presence: true
+  validates :time, presence: true
+  validates :location, presence: true
 end

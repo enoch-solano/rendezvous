@@ -4,13 +4,12 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   get 'sessions/new'
-
   get 'users/new'
 
 	resources :users
-	root 'users#index'
   resources :events
   get '/signup', to: 'users#new'
+  root 'events#index'
 
   get 'welcome/index'
 end

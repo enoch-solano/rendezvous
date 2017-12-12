@@ -8,10 +8,11 @@ class SessionsController < ApplicationController
 
     if @user.nil?
       redirect_to '/login'
-    elsif @user.password == params[:password]
+    elsif @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect_to @user
     else
+      flash.now[:danger] = 'Invalid email and/or password'
       redirect_to '/login'
     end
   end
