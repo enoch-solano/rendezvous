@@ -7,9 +7,11 @@ Rails.application.routes.draw do
   get 'users/new'
 
 	resources :users
-  resources :events
   get '/signup', to: 'users#new'
   root 'events#index'
+
+  patch '/events/:id', to: 'events#attending', as: 'user_attending'
+  resources :events
 
   get 'welcome/index'
 end

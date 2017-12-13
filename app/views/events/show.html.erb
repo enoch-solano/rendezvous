@@ -3,30 +3,56 @@
 <p>
   <strong>Title:</strong>
   <%= @event.title %>
-</p>
-
-<p>
+  <br>
   <strong>Time:</strong>
   <%= @event.time %>
-</p>
-
-<p>
+  <br>
   <strong>Location:</strong>
   <%= @event.location %>
-</p>
-
-<p>
+  <br>
   <strong>Description:</strong>
   <%= @event.description %>
-</p>
-
-<p>
+  <br>
   <strong>Host:</strong>
   <%= @event.user.name %>
 </p>
 <% if logged_in? %>
   <% if @event.user_id == current_user.id %>
-    <%= link_to 'Edit', edit_event_path(@event) %> |
+    <%= link_to 'Edit', edit_event_path(@event) %>
   <% end %>
 <% end %>
+
+<h1>Users Attending</h1>
+<% if @users_attending.empty? %>
+  <p class="table-elt">There are currently no users attending this event.</p>
+  <% if logged_in? %>
+    <% if @event.user_id == current_user.id %>
+      <p class="table-elt">Why not be the first?</p>
+      <%= link_to 'Attend Event', edit_event_path(@event) %>
+    <% end %>
+  <% end %>
+<% else %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="table-dark bg-primary">Name</th>
+        <th class="table-dark bg-primary">Email</th>
+        <th class="table-dark bg-primary" colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users_attending.each do |user| %>
+        <tr>
+          <td class="table-elt"><%= user.name %></td>
+          <td class="table-elt"><%= user.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+<br>
+
+
+
 <%= link_to 'Back', events_path %>

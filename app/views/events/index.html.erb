@@ -12,7 +12,7 @@
         <th class="table-dark bg-primary">Location</th>
         <th class="table-dark bg-primary">Description</th>
         <th class="table-dark bg-primary">Host</th>
-        <th class="table-dark bg-primary" colspan="3"></th>
+        <th class="table-dark bg-primary" colspan="5"></th>
       </tr>
     </thead>
 
@@ -27,6 +27,7 @@
           <td class="table-elt"><%= link_to 'Show', event %></td>
           <% if logged_in? %>
             <% if event.user_id == current_user.id %>
+              <td class="table-elt"><%= link_to 'Attend Event', user_attending_path(event), method: :patch %></td>
               <td class="table-elt"><%= link_to 'Edit', edit_event_path(event) %></td>
               <td class="table-elt"><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <% end %>

@@ -9,7 +9,25 @@ class EventsController < ApplicationController
 
   # GET /events/1
   # GET /events/1.json
-  def show; end
+  def show
+    @users_attending
+  end
+
+  # POST /events/1
+  def attending
+    @users_attending ||= []
+    @users_attending << current_user unless @users_attending.include? current_user
+  end
+
+  def attending?
+    @users_attending ||= []
+    @users_attending.include? current_user
+  end
+
+  def terminating_attendance
+    @users_attending ||= []
+    @users_attending.drop current_user if @users_attending.include? current_user
+  end
 
   # GET /events/new
   def new
@@ -63,6 +81,7 @@ class EventsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_event
     @event = Event.find(params[:id])
+    @users_attending ||= []
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
